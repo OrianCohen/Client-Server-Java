@@ -1,0 +1,59 @@
+package clientserver;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+
+public class MainTasksIHandler implements IHandler {
+    //Custom componenet
+    private ConnectedComponentInterface mComponent;
+    private TheShortestRoutesInterface allRoutes;
+    private SubmarineInterface submarineGame;
+
+    @Override
+    public void handle(InputStream inClient, OutputStream outClient) throws Exception {
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outClient);
+        ObjectInputStream objectInputStream = new ObjectInputStream(inClient);
+        boolean dowork = true;
+        while (dowork) {
+
+            switch (objectInputStream.readObject().toString()) {
+                case "stop": {
+                    dowork = false;
+                    break;
+                }
+
+                case "Task One": {
+                    mComponent = new ConnectedComponent();
+                    int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
+                    ArrayList<HashSet<Index>> component = mComponent.findOneReachables(primitiveMatrix);
+                    objectOutputStream.writeObject(component);
+                    break;
+                }
+
+                case "Task Three": {
+                    submarineGame = new SubmarineAlgorithm();
+                    int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
+                    int component = submarineGame.subMarineGame(primitiveMatrix);
+                    objectOutputStream.writeObject(component);
+                    break;
+                }
+
+                case "Task Two":
+                case "Task Four": {
+                    allRoutes = new BFSAlgorithm();
+                    BFSAlgorithm.allRoutes = new ArrayList<>();
+                    int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
+                    Index start = (Index) objectInputStream.readObject();
+                    Index end = (Index) objectInputStream.readObject();
+                    allRoutes.printAllPaths(primitiveMatrix, start, end);
+                    objectOutputStream.writeObject(BFSAlgorithm.getAllRoutes());
+                    break;
+                }
+
+
+
+            }
+        }
+    }
+}
