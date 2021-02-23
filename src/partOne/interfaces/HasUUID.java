@@ -1,4 +1,4 @@
-package src.partOne;
+package src.partOne.interfaces;
 
 import java.util.UUID;
 
