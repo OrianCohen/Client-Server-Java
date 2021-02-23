@@ -1,8 +1,9 @@
-package clientserver;
+package src.Algorithms;
+
+import src.BackEnd.Index;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
 public class Matrix implements Serializable {
@@ -26,6 +27,7 @@ public class Matrix implements Serializable {
         return primitiveMatrix;
     }
 
+    // Function that return collection of index's (neigbhoors and cross)
     public Collection<Index> getAdjacentIndices(final Index index){
         Collection<Index> list = new ArrayList<>();
         int extracted = -1;
@@ -74,6 +76,7 @@ public class Matrix implements Serializable {
         return primitiveMatrix[index.row][index.column];
     }
 
+    // Get all neighbor that value 1 using stream
     public Collection<Index> getReachables(Index index) {
         ArrayList<Index> filteredIndices = new ArrayList<>();
         this.getAdjacentIndices(index).stream().filter(i-> getValue(i)==1)

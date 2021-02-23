@@ -1,14 +1,21 @@
-package clientserver;
+package src.BackEnd;
+
+import src.Algorithms.BFSAlgorithm;
+import src.Algorithms.ConnectedComponent;
+import src.Algorithms.SubMarineAlgorithm;
+import src.Models.ConnectedComponentInterface;
+import src.Models.SubMarineAlgorithmInterface;
+import src.Models.TheShortestRoutesInterface;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 
 public class MainTasksIHandler implements IHandler {
-    //Custom componenet
+    //Custom component
     private ConnectedComponentInterface mComponent;
     private TheShortestRoutesInterface allRoutes;
-    private SubmarineInterface submarineGame;
+    private SubMarineAlgorithmInterface submarineGame;
 
     @Override
     public void handle(InputStream inClient, OutputStream outClient) throws Exception {
@@ -28,18 +35,32 @@ public class MainTasksIHandler implements IHandler {
                     int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
                     ArrayList<HashSet<Index>> component = mComponent.findOneReachables(primitiveMatrix);
                     objectOutputStream.writeObject(component);
+
+                    break;
+                }
+
+                case "Task Two":{
+                    allRoutes = new BFSAlgorithm();
+                    BFSAlgorithm.allRoutes = new ArrayList<>();
+                    int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
+                    Index start = (Index) objectInputStream.readObject();
+                    Index end = (Index) objectInputStream.readObject();
+                    if(allRoutes.ValidMatrix(primitiveMatrix)) {
+                        allRoutes.printAllPaths(primitiveMatrix, start, end);
+                        objectOutputStream.writeObject(allRoutes.GetTheShortestRoutes(BFSAlgorithm.getAllRoutes(), primitiveMatrix));
+                        break;
+                    }
                     break;
                 }
 
                 case "Task Three": {
-                    submarineGame = new SubmarineAlgorithm();
+                    submarineGame = new SubMarineAlgorithm();
                     int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
                     int component = submarineGame.subMarineGame(primitiveMatrix);
                     objectOutputStream.writeObject(component);
                     break;
                 }
 
-                case "Task Two":
                 case "Task Four": {
                     allRoutes = new BFSAlgorithm();
                     BFSAlgorithm.allRoutes = new ArrayList<>();

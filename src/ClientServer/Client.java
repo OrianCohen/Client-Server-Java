@@ -1,8 +1,11 @@
-package clientserver;
+package src.ClientServer;
+
+import src.BackEnd.Index;
 
 import java.io.*;
 import java.net.Socket;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Client {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
@@ -29,38 +32,36 @@ public class Client {
         toServer.writeObject(new Index(1,1));
         ArrayList<List<Index>> AllExistingPaths = new ArrayList<>((ArrayList<List<Index>>)fromServer.readObject());
         System.out.println("\n TaskFour - All existing routes between 2 points: ");
-        for(List<Index> path: AllExistingPaths){
+        for(List<Index> path: AllExistingPaths)
             System.out.println(path);
-        }
+
 
 //        toServer.writeObject("Task Three");
 //        toServer.writeObject(source);
+//        int validSubmarine = (int) fromServer.readObject();
+//        if(validSubmarine != -1)
+//            System.out.println("The correct submarine for this game" + validSubmarine);
+//        else
+//            System.out.println("GAME OVER SUBMARINE");
 
 
         toServer.writeObject("Task Two");
         toServer.writeObject(source);
         toServer.writeObject(new Index(0,0));
         toServer.writeObject(new Index(2,2));
-        ArrayList<List<Index>> TheShortestPath = new ArrayList<>((ArrayList<List<Index>>)fromServer.readObject());
         System.out.println("\n TaskTwo - The most shortest paths: ");
-        int minPathSize= source.length * source.length;
-        for(List<Index> path: TheShortestPath){
-            if(path.size() < minPathSize)
-                minPathSize = path.size();
-        }
-        for(List<Index> pathlist: TheShortestPath){
-            if(pathlist.size() == minPathSize)
-                System.out.println(pathlist);
-        }
-
+        ArrayList<List<Index>> TheShortestRoutes = new ArrayList<>((ArrayList<List<Index>>)fromServer.readObject());
+        for(List<Index> path: TheShortestRoutes)
+            System.out.println(path);
 
         toServer.writeObject("Task One");
         toServer.writeObject(source);
         ArrayList <HashSet<Index>> connectedComponents = new ArrayList<>((ArrayList<HashSet<Index>>)fromServer.readObject());
         System.out.println("\n TaskOne - All the connected components are: ");
-        for(Object k : connectedComponents)
+        for(HashSet<Index> obj : connectedComponents)
         {
-            System.out.println(k);
+            Collection<Index> sortedDFS = obj.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+            System.out.println(sortedDFS);
         }
 
         toServer.writeObject("stop");

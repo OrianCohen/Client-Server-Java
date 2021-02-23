@@ -1,4 +1,4 @@
-package clientserver.PartOne;
+package src.PartOne;
 
 import org.jetbrains.annotations.NotNull;
 

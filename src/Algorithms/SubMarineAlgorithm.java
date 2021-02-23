@@ -1,4 +1,8 @@
-package clientserver;
+package src.Algorithms;
+
+import src.BackEnd.Index;
+import src.Models.ConnectedComponentInterface;
+import src.Models.SubMarineAlgorithmInterface;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -6,7 +10,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 
-public class SubmarineAlgorithm implements SubmarineInterface {
+public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
     private ConnectedComponentInterface AllConnectedCom;
 
 
@@ -15,9 +19,7 @@ public class SubmarineAlgorithm implements SubmarineInterface {
         AllConnectedCom = new ConnectedComponent();
         boolean flag = true;
         ArrayList<HashSet<Index>> allConnectedCom = AllConnectedCom.findOneReachables(Array);
-
         for (HashSet<Index> obj : allConnectedCom) {
-
             //sort all the connected component
             Collection<Index> sortedDFS = obj.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
             System.out.println(sortedDFS);
@@ -33,19 +35,19 @@ public class SubmarineAlgorithm implements SubmarineInterface {
             if(flag) {
                 int countVertical = 1;
                 int countHorizan = 1;
-                int i = 1;
-                    while (i < Array[0].length && i < Array.length) {
+//                int i = 1;
+//                    while (i < Array[0].length && i < Array.length) {
                         for (Index elem : sortedDFS) {
 
-//                            if(elem.row + 1 < Array[elem.column].length)
-                        if (Array[elem.row + 1][elem.column] == -1)
-                            countVertical++;
+                            if(elem.row + 1 < Array[elem.column].length)
+                                if (Array[elem.row + 1][elem.column] == -1)
+                                    countVertical++;
 
-//                            if(elem.column + 1 < Array[elem.column].length)
-                        if (Array[elem.row][elem.column + 1] == -1)
-                            countHorizan++;
-                        }
-                    i++;
+                            if(elem.column + 1 < Array[elem.column].length)
+                                if (Array[elem.row][elem.column + 1] == -1)
+                                    countHorizan++;
+//                        }
+//                    i++;
                 }
 
                 if(countHorizan == 1 || countVertical ==1)
@@ -65,12 +67,8 @@ public class SubmarineAlgorithm implements SubmarineInterface {
             }
 
         }
-        if (flag) {
-            System.out.println("The correct submarine for this game: " + allConnectedCom.size());
+        if (flag)
             return allConnectedCom.size();
-        } else {
-            System.out.println("bad");
-        }
         return -1;
     }
 
@@ -81,7 +79,7 @@ public class SubmarineAlgorithm implements SubmarineInterface {
                 {0, 0, 0,1,0}
 
         };
-        SubmarineAlgorithm sub = new SubmarineAlgorithm();
+        SubMarineAlgorithm sub = new SubMarineAlgorithm();
         int count ;
         count = sub.subMarineGame(source);
         System.out.println("test orian task three" + count);

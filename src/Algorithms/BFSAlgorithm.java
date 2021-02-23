@@ -1,4 +1,7 @@
-package clientserver;
+package src.Algorithms;
+
+import src.BackEnd.Index;
+import src.Models.TheShortestRoutesInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +16,13 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
 
     @Override
     public void printAllPaths(int[][] primitiveMatrix, Index s, Index d) {
+        try{
+            if(primitiveMatrix.length == 0)
+                throw new NullPointerException();
+        }
+        catch (NullPointerException err){
+            throw err;
+        }
         this.matrix = new Matrix(primitiveMatrix);
         //boolean[] isVisited = new boolean[v];
         boolean[][] visited = new boolean[primitiveMatrix.length][primitiveMatrix.length];
@@ -38,7 +48,7 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
                                    List<Index> localPathList)
     {
         if (u.equals(d)) {
-            allRoutes.add(new ArrayList<Index>(localPathList));
+            allRoutes.add(new ArrayList<>(localPathList));
             // if match found then no need to traverse more till depth
             return;
         }
@@ -60,4 +70,32 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
         visited[u.row][u.column] = false;
     }
 
+    // Find the shortest routes exists in out matrix
+    @Override
+    public ArrayList<List<Index>> GetTheShortestRoutes(ArrayList<List<Index>> AllRoutes, int[][] source){
+        ArrayList<List<Index>> AllShortsRoutes = new ArrayList<>();
+        int minPathSize= source.length * source.length;
+        for(List<Index> path: AllRoutes){
+            if(path.size() < minPathSize)
+                minPathSize = path.size();
+        }
+        for(List<Index> pathlist: AllRoutes){
+            if(pathlist.size() == minPathSize)
+                AllShortsRoutes.add(pathlist);
+        }
+        return AllShortsRoutes;
+    }
+
+    // Function that checks if our input matrix out of boundi
+    @Override
+    public boolean ValidMatrix(int[][] Array) {
+        try{
+            if(Array.length >= 50)
+                throw new IllegalArgumentException();
+        }
+        catch (IllegalArgumentException err){
+            throw  err;
+        }
+        return true;
+    }
 }
