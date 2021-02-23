@@ -1,4 +1,4 @@
-package src.BackEnd;
+package src.backend.interfaces;
 
 import java.io.*;
 

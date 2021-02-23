@@ -1,4 +1,4 @@
-package src.PartOne;
+package src.partOne;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -33,13 +33,13 @@ public final class MyUUID implements Comparable<MyUUID> {
     public static void main(String[] args) {
         MyUUID test = new MyUUID("matan");
         System.out.println(test);
-        System.out.println(test.Decoder(test));
+        System.out.println(Decoder(test));
 
     }
 
     @Override
     public int compareTo(@NotNull MyUUID o) {
-        if(this.uuid.compareTo((o.uuid)) == -1)
+        if(this.uuid.compareTo((o.uuid)) < 0)
         {
             System.out.println("Our object is smaller than other object");
             return -1;
@@ -49,7 +49,7 @@ public final class MyUUID implements Comparable<MyUUID> {
             System.out.println("Our object is equals to other object");
             return 0;
         }
-        if(this.uuid.compareTo((o.uuid)) == 1)
+        if(this.uuid.compareTo((o.uuid)) > 0)
         {
             System.out.println("Our object is greater than other object");
             return 1;

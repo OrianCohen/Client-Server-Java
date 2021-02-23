@@ -1,4 +1,4 @@
-package src.PartOne;
+package src.partOne;
 
 import java.util.Collection;
 
