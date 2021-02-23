@@ -1,6 +1,6 @@
 package src.ClientServer;
 
-import src.BackEnd.Index;
+import src.Algorithms.Index;
 
 import java.io.*;
 import java.net.Socket;
@@ -35,14 +35,17 @@ public class Client {
         for(List<Index> path: AllExistingPaths)
             System.out.println(path);
 
+        int[][] subMarine = {
+                {1, 1, 0,1,1},
+                {1, 1, 0,1,1},
+                {1, 1, 0,1,1}
 
-//        toServer.writeObject("Task Three");
-//        toServer.writeObject(source);
-//        int validSubmarine = (int) fromServer.readObject();
-//        if(validSubmarine != -1)
-//            System.out.println("The correct submarine for this game" + validSubmarine);
-//        else
-//            System.out.println("GAME OVER SUBMARINE");
+        };
+
+        toServer.writeObject("Task Three");
+        toServer.writeObject(subMarine);
+        int validSubmarine = (int) fromServer.readObject();
+        System.out.println("\n TaskThree - The correct Submarines for this game " + validSubmarine);
 
 
         toServer.writeObject("Task Two");

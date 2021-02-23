@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public final class MyUUID implements Comparable<MyUUID> {
-    private final String key;
+    private String key;
     private final UUID uuid;
 
     public MyUUID(String key) {

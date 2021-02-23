@@ -1,4 +1,4 @@
-package src.BackEnd;
+package src.Algorithms;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -1,11 +1,6 @@
 package src.BackEnd;
 
-import src.Algorithms.BFSAlgorithm;
-import src.Algorithms.ConnectedComponent;
-import src.Algorithms.SubMarineAlgorithm;
-import src.Models.ConnectedComponentInterface;
-import src.Models.SubMarineAlgorithmInterface;
-import src.Models.TheShortestRoutesInterface;
+import src.Algorithms.*;
 
 import java.io.*;
 import java.util.ArrayList;

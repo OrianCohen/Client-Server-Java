@@ -1,8 +1,5 @@
 package src.Algorithms;
 
-import src.BackEnd.Index;
-import src.Models.ConnectedComponentInterface;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.CopyOnWriteArrayList;

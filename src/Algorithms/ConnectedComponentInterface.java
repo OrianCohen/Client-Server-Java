@@ -1,6 +1,4 @@
-package src.Models;
-
-import src.BackEnd.Index;
+package src.Algorithms;
 
 import java.util.ArrayList;
 import java.util.HashSet;
