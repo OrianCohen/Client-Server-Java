@@ -36,7 +36,7 @@ public class TcpServer {
                     try {
                         Socket request = server.accept();
                         System.out.println("server::client");
-                        Runnable runnable = () -> {
+                        Runnable runnable = () -> { //using lambda
                             try {
                                 System.out.println("server::handle");
                                 mRequestConcreteIHandler.handle(request.getInputStream(),

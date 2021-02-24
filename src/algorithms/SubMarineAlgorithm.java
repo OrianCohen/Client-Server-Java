@@ -98,8 +98,10 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
         //we will use the function from task one to help us get all the connected component, and then we will run in for loop on each connected com
         ArrayList<HashSet<Index>> allConnectedCom = new ConnectedComponent().findOneReachables(inputArray);
         for (HashSet<Index> obj : allConnectedCom) {
-            //sort all the connected component (from low index to high index
+            //sort all the connected component (from low index to high index // using functional interfaces
+            // advantage : we dont need to create another data structure
             Collection<Index> sortedDFS = obj.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
+
             if (sortedDFS.size() == 1) { // In case only one Index is appear, we will not count it
                 continue;
             }

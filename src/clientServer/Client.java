@@ -23,22 +23,22 @@ public class Client {
         int[][] source = {
                 {1, 1, 0},
                 {0, 1, 0},
-                {0, 1, 0}
+                {0, 0, 1}
         };
 
         toServer.writeObject("Task Four");
         toServer.writeObject(source);
         toServer.writeObject(new Index(0, 0));
-        toServer.writeObject(new Index(1, 1));
+        toServer.writeObject(new Index(2, 2));
         ArrayList<List<Index>> AllExistingPaths = new ArrayList<>((ArrayList<List<Index>>) fromServer.readObject());
         System.out.println("\n TaskFour - All existing routes between 2 points: ");
         for (List<Index> path : AllExistingPaths)
             System.out.println(path);
 
         int[][] subMarine = {
-                {1, 1, 1, 0, 0},
-                {1, 1, 1, 0, 0},
-                {1, 1, 1, 0, 0}
+                {1, 1, 0, 0, 0},
+                {1, 1, 0, 0, 1},
+                {1, 1, 0, 0, 1}
         };
 
         toServer.writeObject("Task Three");
@@ -50,7 +50,7 @@ public class Client {
         toServer.writeObject("Task Two");
         toServer.writeObject(source);
         toServer.writeObject(new Index(0, 0));
-        toServer.writeObject(new Index(1, 1));
+        toServer.writeObject(new Index(2, 2));
         System.out.println("\n TaskTwo - The most shortest paths: ");
         ArrayList<List<Index>> TheShortestRoutes = new ArrayList<>((ArrayList<List<Index>>) fromServer.readObject());
         for (List<Index> path : TheShortestRoutes)
