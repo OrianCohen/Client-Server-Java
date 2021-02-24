@@ -4,6 +4,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.Objects;
+/*
+ * This Class represents an Index inside matrix (the row and the column for each Index)
+ * */
 
 public class Index implements Serializable, Comparable<Index> {
     public int mRow, mCol;
@@ -32,12 +35,6 @@ public class Index implements Serializable, Comparable<Index> {
     public int hashCode() {
         return Objects.hash(mRow, mCol);
     }
-
-    public static void main(String[] args) {
-        Index myIndex = new Index(2, 2);
-        System.out.println(myIndex);
-    }
-
 
     @Override
     public int compareTo(@NotNull Index o) {

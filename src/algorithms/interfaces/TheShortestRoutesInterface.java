@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface TheShortestRoutesInterface {
-    void printAllPaths(int[][] primitiveMatrix, Index start, Index end) throws InvalidInputException;
+    void checkAllPossibleRoutes(int[][] primitiveMatrix, Index start, Index end) throws InvalidInputException;
 
-    void printAllPathsUtil(Index u, Index d, boolean[][] visited, List<Index> localPathList);
+    void checkAllPossibleRoutesRecursive(Index u, Index d, boolean[][] visited, List<Index> localPathList);
 
     ArrayList<List<Index>> GetTheShortestRoutes(ArrayList<List<Index>> AllRoutes, int[][] source);
 

@@ -12,34 +12,34 @@ import java.util.concurrent.*;
  * This class represents a multi-threaded server
  */
 public class TcpServer {
-    private final int port;
-    private volatile boolean stopServer;
-    private final ThreadPoolExecutor executor;
-    private final IHandler requestConcreteIHandler;
-    private final Object lock = new Object();
+    private final int mPort;
+    private volatile boolean mStopServer;
+    private final ThreadPoolExecutor mExecutor;
+    private final IHandler mRequestConcreteIHandler;
+    private final Object mLock = new Object();
 
     public TcpServer(int port, MainTasksIHandler concreteIHandlerStrategy) {
-        this.port = port;
-        stopServer = false;
-        executor = new ThreadPoolExecutor(
+        this.mPort = port;
+        mStopServer = false;
+        mExecutor = new ThreadPoolExecutor(
                 3, 5, 10,
                 TimeUnit.SECONDS, new PriorityBlockingQueue<>());
-        this.requestConcreteIHandler = concreteIHandlerStrategy;
+        this.mRequestConcreteIHandler = concreteIHandlerStrategy;
     }
 
     public void startServer() {
         Runnable mainLogic = () -> {
             try {
-                ServerSocket server = new ServerSocket(port);
+                ServerSocket server = new ServerSocket(mPort);
                 server.setSoTimeout(1000);
-                while (!stopServer) {
+                while (!mStopServer) {
                     try {
                         Socket request = server.accept();
                         System.out.println("server::client");
                         Runnable runnable = () -> {
                             try {
                                 System.out.println("server::handle");
-                                requestConcreteIHandler.handle(request.getInputStream(),
+                                mRequestConcreteIHandler.handle(request.getInputStream(),
                                         request.getOutputStream());
                                 // Close all streams
                                 request.getInputStream().close();
@@ -50,8 +50,9 @@ public class TcpServer {
                                 System.err.println(e.getMessage());
                             }
                         };
-                        synchronized (lock) {
-                            executor.execute(runnable);
+                        //wrap with tread safe
+                        synchronized (mLock) {
+                            mExecutor.execute(runnable);
                         }
                     } catch (SocketTimeoutException ignored) {
                     }
@@ -66,9 +67,9 @@ public class TcpServer {
     }
 
     public void stop() {
-        if (!stopServer) {
-            stopServer = true;
-            executor.shutdown();
+        if (!mStopServer) {
+            mStopServer = true;
+            mExecutor.shutdown();
         }
     }
 

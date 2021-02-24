@@ -7,7 +7,9 @@ import src.algorithms.interfaces.TheShortestRoutesInterface;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.HashSet;
-
+/*
+* This class help us to handle requests from the client
+* */
 public class MainTasksIHandler implements IHandler {
     private ObjectOutputStream mObjectOutputStream;
     private ObjectInputStream objectInputStream;
@@ -53,11 +55,13 @@ public class MainTasksIHandler implements IHandler {
 
     }
 
+
     private void initReaderAndOutput(OutputStream outClient, InputStream inClient) throws IOException {
         mObjectOutputStream = new ObjectOutputStream(outClient);
         objectInputStream = new ObjectInputStream(inClient);
     }
 
+    // execute for task 2 & 4 in order to avoid duplicate code
     private void executeBFSTask(int number) throws Exception {
         TheShortestRoutesInterface allRoutes = new BFSAlgorithm();
         int[][] primitiveMatrix = (int[][]) objectInputStream.readObject();
@@ -65,15 +69,16 @@ public class MainTasksIHandler implements IHandler {
         Index end = (Index) objectInputStream.readObject();
 
         switch (number) {
+            // if we are in task 2 we will implement this task
             case 2: {
                 if (allRoutes.ValidMatrix(primitiveMatrix)) {
-                    allRoutes.printAllPaths(primitiveMatrix, start, end);
+                    allRoutes.checkAllPossibleRoutes(primitiveMatrix, start, end);
                     mObjectOutputStream.writeObject(allRoutes.GetTheShortestRoutes(allRoutes.getAllRoutes(), primitiveMatrix));
                 }
                 break;
             }
             case 4: {
-                allRoutes.printAllPaths(primitiveMatrix, start, end);
+                allRoutes.checkAllPossibleRoutes(primitiveMatrix, start, end);
                 mObjectOutputStream.writeObject(allRoutes.getAllRoutes());
                 break;
             }

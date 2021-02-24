@@ -2,9 +2,11 @@ package src.algorithms;
 
 import src.algorithms.interfaces.TheShortestRoutesInterface;
 import src.exception.InvalidInputException;
-
 import java.util.ArrayList;
 import java.util.List;
+/*
+* This class help us to solve task two and four, in a given of matrix we will fins all the possible routes that exists
+* */
 
 public class BFSAlgorithm implements TheShortestRoutesInterface {
     public Matrix mMatrix;
@@ -14,8 +16,9 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
         return mAllRoutes;
     }
 
+    // Root function for task 2 & 4, from here we will check all the possible routes from 's' to d' index, in the end we will get all the possible routes to our data member mAllRoutes
     @Override
-    public void printAllPaths(int[][] primitiveMatrix, Index s, Index d) throws InvalidInputException {
+    public void checkAllPossibleRoutes(int[][] primitiveMatrix, Index s, Index d) throws InvalidInputException {
         if (primitiveMatrix.length == 0) {
             throw new InvalidInputException();
         }
@@ -23,28 +26,19 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
         //boolean[] isVisited = new boolean[v];
         boolean[][] visited = new boolean[primitiveMatrix.length][primitiveMatrix.length];
         ArrayList<Index> pathList = new ArrayList<>();
-
         // add source to path[]
         pathList.add(s);
-
         // Call recursive utility
-        printAllPathsUtil(s, d, visited, pathList);
+        checkAllPossibleRoutesRecursive(s, d, visited, pathList);
     }
 
-    // A recursive function to print
-    // all paths from 'u' to 'd'.
-    // isVisited[] keeps track of
-    // vertices in current path.
-    // localPathList<> stores actual
-    // vertices in the current path
-
+    // A recursive function that find all the paths from start index to end index
     @Override
-    public void printAllPathsUtil(Index u, Index d,
-                                  boolean[][] visited,
-                                  List<Index> localPathList) {
+    public void checkAllPossibleRoutesRecursive(Index u, Index d,
+                                                boolean[][] visited,
+                                                List<Index> localPathList) {
         if (u.equals(d)) {
             mAllRoutes.add(new ArrayList<>(localPathList));
-            // if match found then no need to traverse more till depth
             return;
         }
         // Mark the current node
@@ -55,17 +49,15 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
             if (!visited[i.mRow][i.mCol]) {
                 // store current node
                 localPathList.add(i);
-                printAllPathsUtil(i, d, visited, localPathList);
-
-                // remove current node
+                checkAllPossibleRoutesRecursive(i, d, visited, localPathList);
                 localPathList.remove(i);
             }
         }
-        // Mark the current node
+        // We will mark the current node
         visited[u.mRow][u.mCol] = false;
     }
 
-    // Find the shortest routes exists in out matrix
+    // Find the shortest routes from all the possible routes exists in our matrix in a given start index and last index
     @Override
     public ArrayList<List<Index>> GetTheShortestRoutes(ArrayList<List<Index>> AllRoutes, int[][] source) {
         ArrayList<List<Index>> AllShortsRoutes = new ArrayList<>();
@@ -81,7 +73,7 @@ public class BFSAlgorithm implements TheShortestRoutesInterface {
         return AllShortsRoutes;
     }
 
-//     Function that checks if our input matrix out of bound
+//     Function that checks if our input matrix out of bound greater then 50
         @Override
         public boolean ValidMatrix(int[][] array) throws InvalidInputException {
             if (array.length >= 50) {

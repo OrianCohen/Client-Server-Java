@@ -6,7 +6,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
-    // ברגע שזה מלבן או מרובע מספר ה אינדקסים חייב להיות זוגי
+
+    // we will check if the connected com is square or rectangle
     public boolean isRectangle(Collection<Index> input) {
         final Iterator ite = input.iterator();
         Index CurrIndex = (Index) ite.next();
@@ -22,6 +23,7 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
         return true;
     }
 
+
     public Index getLatIndex(Collection<Index> input) {
         final Iterator ite = input.iterator();
         Index lastIndex = (Index) ite.next();
@@ -31,17 +33,20 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
         return lastIndex;
     }
 
-    // נסדוק האם זה במצב מאונך או מאוזן
+    // This function help us check if the connected com in horizon r vertical position
     public boolean isHorVar(Collection<Index> input) {
-        final Iterator ite = input.iterator();
-        Index firstIndex = (Index) ite.next();
-        Index lastIndex = firstIndex;
+//        final Iterator ite = input.iterator();
+//        Index firstIndex = (Index) ite.next();
+//        Index lastIndex = firstIndex;
+//        Index curr;
+//        while (ite.hasNext()) {
+//            lastIndex = (Index) ite.next();
+//        }
+        Index lastIndex = getLatIndex(input);
+        Index firstIndex = input.iterator().next();
         Index curr;
-        while (ite.hasNext()) {
-            lastIndex = (Index) ite.next();
-        }
 
-        if (firstIndex.mRow == lastIndex.mRow) {//מצב מאוזן
+        if (firstIndex.mRow == lastIndex.mRow) { // In case of horizon position
             Iterator<Index> itera = input.iterator();
             curr = itera.next();
             while (itera.hasNext()) {
@@ -52,7 +57,7 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
             }
             return true;
         }
-        if (firstIndex.mCol == lastIndex.mCol) {// מצב מאונך
+        if (firstIndex.mCol == lastIndex.mCol) { // in case of vertical position
             Iterator<Index> itera = input.iterator();
             curr = itera.next();
             while (itera.hasNext()) {
@@ -66,7 +71,7 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
         return false;
     }
 
-    //נבדוק האם יש לאינדקס צמד (מטפלים במקרהשמספר האינסקסים ברכיב קשירות הוא זוגי)
+    // We are checking the case the number of indexes is even, checking pairs
     public boolean isPairs(Collection<Index> input) {
         final Iterator ite = input.iterator();
         Index firstIndex = (Index) ite.next();
@@ -85,18 +90,20 @@ public class SubMarineAlgorithm implements SubMarineAlgorithmInterface {
         return true;
     }
 
+    //
     @Override
     public int subMarineGame(int[][] inputArray) {
         boolean flag = true;
         int count = 0;
+        //we will use the function from task one to help us get all the connected component, and then we will run in for loop on each connected com
         ArrayList<HashSet<Index>> allConnectedCom = new ConnectedComponent().findOneReachables(inputArray);
         for (HashSet<Index> obj : allConnectedCom) {
-            //sort all the connected component
+            //sort all the connected component (from low index to high index
             Collection<Index> sortedDFS = obj.stream().sorted().collect(Collectors.toCollection(LinkedHashSet::new));
-            if (sortedDFS.size() == 1) { //רק איבר אחד לא טוב
+            if (sortedDFS.size() == 1) { // In case only one Index is appear, we will not count it
                 continue;
             }
-            if (isHorVar(sortedDFS)) { // האם זה רק במצב מאונך או מאוזן
+            if (isHorVar(sortedDFS)) { // we will check if this connected component is in horizon position or vertical
                 count++;
                 continue;
             }

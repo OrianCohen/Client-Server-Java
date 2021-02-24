@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/*
+ * A matrix represents a collection of cells in a 2D array, known as its indices
+ * Represents the common functionality required for all matrices
+ * */
+
 public class Matrix implements Serializable {
     int[][] mPrimitiveMatrix;
 
@@ -14,18 +19,7 @@ public class Matrix implements Serializable {
                 .toArray(int[][]::new);
     }
 
-    public void printMatrix() {
-        for (int[] row : mPrimitiveMatrix) {
-            String s = Arrays.toString(row);
-            System.out.println(s);
-        }
-    }
-
-    public final int[][] getPrimitiveMatrix() {
-        return mPrimitiveMatrix;
-    }
-
-    // Function that return collection of index's (neigbhoors and cross)
+    // Function that return A collection of index's (neighbors and cross matrix)
     public Collection<Index> getAdjacentIndices(final Index index) {
         Collection<Index> list = new ArrayList<>();
         int extracted = -1;
@@ -90,6 +84,17 @@ public class Matrix implements Serializable {
             return null;
         }
         return filteredIndices;
+    }
+
+    public void printMatrix() {
+        for (int[] row : mPrimitiveMatrix) {
+            String s = Arrays.toString(row);
+            System.out.println(s);
+        }
+    }
+
+    public final int[][] getPrimitiveMatrix() {
+        return mPrimitiveMatrix;
     }
 
     @Override
