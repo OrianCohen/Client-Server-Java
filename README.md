@@ -2,5 +2,6 @@
 
 Run the program from: clientServerJava/src/Driver/Main.java/
 
-Wiki page : https://github.com/OrianCohen/clientServerJava/wiki
+For more details visit my WIKI page : 
+https://github.com/OrianCohen/clientServerJava/wiki
 
